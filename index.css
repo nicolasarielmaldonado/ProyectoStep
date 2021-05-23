@@ -6,8 +6,8 @@
 
 .map {
     display:grid;
-    grid-template-columns: repeat(4, 64px);
-    width: 300px;
+    grid-template-columns: repeat(10, 64px);
+
 }
 .map div {
     border: 1px solid gray;
