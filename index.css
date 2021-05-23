@@ -1,24 +1,29 @@
-* {
+/* Reseteo de Estilos */
+
+*,
+*::after,
+*::before{
     margin: 0;
     box-sizing: border-box;
 }
 
+/* Estilos Generales */
 
 .map {
-    display:grid;
-    grid-template-columns: repeat(10, 64px);
-
+    display: grid;
+    grid-template-columns: repeat(16, 64px);
 }
+
 .map div {
-    border: 1px solid gray;
+    background-image: url(/src/suelo.png);
+    /* border: 1px solid gray; */
     display: flex;
     width: 64px;
     height: 64px;
     padding: 0;
     text-align: center;
-
 }
 
-#protagonista {
+#jugador {
     margin: auto;
 }
