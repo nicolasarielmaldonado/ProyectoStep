@@ -1,0 +1,24 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+
+.map {
+    display:grid;
+    grid-template-columns: repeat(4, 64px);
+    width: 300px;
+}
+.map div {
+    border: 1px solid gray;
+    display: flex;
+    width: 64px;
+    height: 64px;
+    padding: 0;
+    text-align: center;
+
+}
+
+#protagonista {
+    margin: auto;
+}
