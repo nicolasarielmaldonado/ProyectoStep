@@ -7,6 +7,13 @@
     box-sizing: border-box;
 }
 
+html {
+    overflow: hidden;
+}
+
+body {
+    overflow: hidden;
+}
 /* Estilos Generales */
 
 .header {
@@ -22,7 +29,7 @@
 
 .map {
     display: grid;
-    grid-template-columns: repeat(16, 64px);
+    grid-template-columns: repeat(30, 64px);
 }
 
 .map div {

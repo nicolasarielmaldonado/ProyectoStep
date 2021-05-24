@@ -8,34 +8,86 @@ const jugador = {
         posicionX : 6,
         posicionY : 10,
     },
-    maxPasos: 100,
-    pasos: 100,
+    maxPasos: 10,
+    pasos: 50,
     maxVida: 50,
     vida: 50,
-    inventorio: []
+    inventorio: [],
+}
+
+let posicionesOcupadas = [
+    [jugador.posicion.posicionX, jugador.posicion.posicionY]  //POSICION INICIAL DEL PERSONAJE / IMPOSIBILITA EL SPAWN SOBRE ESE TILE
+];
+
+//GENERA POSICION DE OBJETOS AL AZAR Y PUSHEA A ARRAY DE POSICIONES OCUPADAS
+const PosObjectosAlAzar = () => { 
+
+    let numeritoX = Math.floor((Math.random() * 15)+1);
+    let numeritoY = Math.floor((Math.random() * 15)+1);
+    let noRepetidos = 0;
+
+
+    posicionesOcupadas.forEach((e, i) => {
+        if(posicionesOcupadas[i][0] === numeritoX && posicionesOcupadas[i][1] === numeritoY){ //LO QUE PASA SI ENCUENTRA UN NUMERO IGUAL YA GENERADO
+        } else {
+        /*  arrayNumeros.push([numeritoX, numeritoY]); //PUSHEA SI NO EXISTE */
+            noRepetidos++;
+        }
+    })
+    if (noRepetidos === posicionesOcupadas.length){
+        posicionesOcupadas.push([numeritoX, numeritoY]);
+        return {x:posicionesOcupadas[posicionesOcupadas.length-1][0], y:posicionesOcupadas[posicionesOcupadas.length-1][1]}; 
+    } else {
+        return PosObjectosAlAzar();
+    }
 }
 
 
-// Codigo numero al azar
-// const NumeroAlAzar = () =>{
-//     let numerito = Math.floor(Math.random() * 2);
-//     return numerito;
-// }
+const contadorPasos = () => {
+    if (jugador.pasos > 0 ){
+        jugador.pasos--;
+    } else {
+        console.log("SIN PASOS");
+    }
+    
+}
 
+//Actualiza interface pasos
+const ActualizarPasos = () => {
+    let $contadorDOM = document.getElementById("contador");
+    $contadorDOM.textContent = jugador.pasos;
+}
 
+const piedras = [
+    PosObjectosAlAzar(),
+    PosObjectosAlAzar(),
+    PosObjectosAlAzar(),
+    PosObjectosAlAzar(),
+    PosObjectosAlAzar(),
+    PosObjectosAlAzar(),
+    PosObjectosAlAzar(),
+    PosObjectosAlAzar(),
+    PosObjectosAlAzar(),
+    PosObjectosAlAzar(),
+    PosObjectosAlAzar(),
+    PosObjectosAlAzar(),
+    PosObjectosAlAzar(),
+    PosObjectosAlAzar(),
+    PosObjectosAlAzar(),
+    PosObjectosAlAzar(),
+    PosObjectosAlAzar(),
+    PosObjectosAlAzar()
+];   //GENERADO RANDOM // ARRAY DE PIEDRAS 
 
-const piedras = [{x:2,y:3},{x:5,y:9},{x:8,y:2}];   //GENERADO RANDOM // ARRAY DE PIEDRAS
-
-const dibujarPiedras = () =>{
+const DibujarPiedras = () =>{
     piedras.forEach(e => {
         let $piedraDOM = document.getElementById(`${e.y},${e.x}`);
         const $imagepiedra = document.createElement('img');
         $imagepiedra.src = "/src/roca.png"; 
-        $piedraDOM.appendChild($imagepiedra);   
-    });
+        $piedraDOM.appendChild($imagepiedra);  
+        }
+    );
 }
-
-
 
 
 //Escucha del teclado y control de movimientos
@@ -55,7 +107,9 @@ document.addEventListener("keydown", (event) => {
                     colisionEstado = true;
                 }
             })
-            if (!colisionEstado){
+            if (!colisionEstado && jugador.pasos>0){
+                contadorPasos();
+                ActualizarPasos();
                 jugador.posicion.posicionY--;
             }
         }
@@ -67,7 +121,9 @@ document.addEventListener("keydown", (event) => {
                     colisionEstado = true;
                 }
             })
-            if (!colisionEstado){
+            if (!colisionEstado && jugador.pasos>0){
+                contadorPasos();
+                ActualizarPasos();
                 jugador.posicion.posicionX--;
             }
         }
@@ -79,7 +135,9 @@ document.addEventListener("keydown", (event) => {
                     colisionEstado = true;
                 }
             })
-            if (!colisionEstado){
+            if (!colisionEstado && jugador.pasos>0){
+                contadorPasos();
+                ActualizarPasos();
                 jugador.posicion.posicionY++;
             }
         }
@@ -91,26 +149,42 @@ document.addEventListener("keydown", (event) => {
                     colisionEstado = true;
                 }
             })
-            if (!colisionEstado){
+            if (!colisionEstado && jugador.pasos>0){
+                contadorPasos();
+                ActualizarPasos();
                 jugador.posicion.posicionX++;
             }
         }
 
 
         //Funciones a realizar al moverse
-        limpiarJugador(posicionYAnterior,posicionXAnterior);
-        dibujarMapa();
+        LimpiarJugador(posicionYAnterior,posicionXAnterior);
+        DibujarMapa();
     }
 });
 
 //Borrar la posicion anterior
-const limpiarJugador = (movimientoAnteriorY, movimientoAnteriorX) => {
+const LimpiarJugador = (movimientoAnteriorY, movimientoAnteriorX) => {
     let $posicionAnterior = document.getElementById(`${movimientoAnteriorY},${movimientoAnteriorX}`);
     $posicionAnterior.innerHTML = "";
 }
+ 
+//Construye Divs de mapa
+const SetDivsMapa = () => {
+    let $parentDom = document.getElementById("map");
+
+    for (let i = 1 ; i<31 ; i++){//columna
+        for (let j = 1 ; j<31 ; j++){ //fila mantener relacion con grid-template-columns
+            let $tileMapa = document.createElement("div");
+            $tileMapa.id = `${i},${j}`
+            $parentDom.appendChild($tileMapa);
+
+        }
+    }
+}
 
 //Dibujar jugador en el map      //   ----->CAMBIAR A DRAW GLOBAL
-const dibujarMapa = () => { 
+const DibujarMapa = () => { 
     let $posicionActual = document.getElementById(`${jugador.posicion.posicionY},${jugador.posicion.posicionX}`); 
     const $imagenJugador = document.createElement('img');
     $imagenJugador.src = jugador.sprite;   //Carga en el elemento image el sprite del jugador
@@ -121,10 +195,12 @@ const dibujarMapa = () => {
 } 
 
 //Inicar dibujado al cargar la aplicacion
-const inicializacion = () => {
-    dibujarMapa();
-    dibujarPiedras();
+const Inicializacion = () => {
+    SetDivsMapa();
+    DibujarMapa();
+    DibujarPiedras();
+    ActualizarPasos();
 }
 
 
-inicializacion();
+Inicializacion();
