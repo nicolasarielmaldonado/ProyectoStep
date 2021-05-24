@@ -9,6 +9,17 @@
 
 /* Estilos Generales */
 
+.header {
+    height: 32px;
+    width: 100%;
+    background-color: black;
+}
+
+.contador {
+    font-size: 2em;
+    color: white;
+}
+
 .map {
     display: grid;
     grid-template-columns: repeat(16, 64px);
