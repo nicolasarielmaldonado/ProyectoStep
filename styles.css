@@ -1,0 +1,135 @@
+/* Reseteo de Estilos */
+
+*,
+*::after,
+*::before{
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    overflow: hidden;
+}
+
+body {
+    overflow: hidden;
+    background: rgb(0, 0, 0);
+    font-family: 'Josefin Sans', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+} 
+
+/* Estilos Generales */
+
+.game{
+    width: 90%;
+    position: relative;
+}
+
+.contador{
+    position: absolute;
+    z-index: 10;
+    top: 0.5em;
+    left: 6px;
+    display: inline;
+    color: white;
+    font-size: 22px;
+}
+
+.vida {
+    display: inline;
+    position: absolute;
+    z-index: 10;
+    top: 0.5em;
+    left: 70px;
+    color: rgb(24, 240, 35);
+    font-size: 22px;
+}
+
+.menu{
+    position: absolute;
+    top: 0.5em;
+    right: 6px;
+    z-index: 10;
+    border: none;
+    outline: none;
+    height: 22px;
+    width: 44px;
+    cursor: pointer;
+}
+
+.menu_desplegado{
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    right: 0;
+    width: 38%;
+    height: 100%;
+    background-color: rgb(0, 0, 0,0.5);
+}
+
+.inventario{
+    width: 90%;
+    height: 200px;
+    background-color: rgb(236, 181, 0);
+    margin: 80% auto;
+    display: grid;
+    grid-template-columns: repeat(4, 25%);
+}
+
+.inventario div{
+    height: 60px;
+    width: 60px;
+    background-color: rgb(139, 15, 133);
+    margin: auto;
+}
+
+.menu_ocultar{
+    width: 44px;
+    height: 22px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    margin: 0.5em 0 0 6px;
+}
+
+.map {
+    display: grid;
+    grid-template-columns: repeat(21,auto);
+    width: 100%;
+}
+
+.map div {
+    display: flex;
+    height: 22px;
+    position: relative;
+}
+
+.map div img{
+    width: 100%;
+}
+
+#jugador, .objetosDeJuego {
+    position: absolute;
+    height: 100%;
+    margin: auto;
+}
+
+.displaynone{
+    display: none;
+}
+
+@media screen and (min-width: 650px){
+    .map div {
+        height: 50px;
+    }
+}
+
+@media screen and (min-width: 1540px){
+    .map div {
+        height: 75px;
+    }
+}
